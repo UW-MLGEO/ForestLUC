@@ -1,7 +1,6 @@
-ghhhhhhhhhh# AGENTS.md for MLGEO2026_UWNETID
+# AGENTS.md for ForestLUC
 
 ## Project
-Course repository for ESS 469/569, Autumn 2026: homeworks and the final project.
 Every number and figure here must be regenerated from a fresh clone using
 the commands in README.md.
 
@@ -30,3 +29,6 @@ the commands in README.md.
 - Run `pixi run smoke` before reporting any result, and show its last line.
 - Report the exact commands you ran and the commit hash they ran on.
 - If a check fails or a value cannot be fetched, say so; do not substitute an estimate.
+
+## AI-ready data
+- Before applying the machine learning commands, data must be verified using the AI-ready rubric in the ai_ready_rubric_for_agents.md
