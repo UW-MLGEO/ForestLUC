@@ -19,6 +19,18 @@ Install the environment:
 pixi install
 ```
 
+Run the smoke test:
+
+```bash
+pixi run smoke
+```
+
+A successful test ends with:
+
+```text
+smoke test passed
+```
+
 ## Reproducibility check
 
 From a fresh clone, run:
@@ -35,8 +47,6 @@ small numerical calculation. A successful run ends with:
 ```text
 smoke test passed
 ```
-
-The environment was tested in GitHub Codespaces on Linux x86_64.
 
 ## Working with notebooks
 
@@ -71,9 +81,3 @@ git push
 When data are added, the README will record the source URL or DOI, version, retrieval date,
 units, and processing steps. Raw data will remain unchanged, and processed
 data will be written separately.
-
-## AI assistance
-
-AI assistance was used for troubleshooting the course environment and
-documenting the HW1 verification process. Commands were checked in the
-Codespaces terminal, and the verification records are stored in `AI_logs/`.
