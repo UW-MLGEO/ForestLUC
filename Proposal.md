@@ -3,6 +3,10 @@
 ## Scientific question 
 Central Kalimantan contains some of Indonesia’s most carbon-dense forests, yet the region faces rapid land use change from deforestation and forest degradation. Understanding how much above‑ground biomass and carbon the region stores is crucial for carbon accounting, forest monitoring, and land‑use planning. Field-based biomass measurements are spatially limited, making remote sensing approaches essential for regional-scale assessment.
 
+ALTERNATIVE:
+Sulawesi has had rapid economic growth, being Indonesia's fastest growing economy as of 2025 (https://kadin.id/en/data-dan-statistik/profile-ekonomi-provinsi/). With it's main exports being basic metals and agriculture, however, it's carbon-dense forests face rapid deforestation due to land use changes. Understanding the carbon stocks through above ground biomass tracking is essential for land-use planning and carbon accounting. Due to field-based biomass measurements being spatially limited, the core data collection comes from remote sensing to address the regional-scale assessment. 
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 This project aims to develop and test a remote sensing-based model that can estimate global aboveground biomass (AGB) carbon density over time. The workflow, adapted from an open‑source model by Farahani (2025), combines satellite‑derived vegetation indices, canopy structure metrics, land‑cover information, and terrain data to train a machine‑learning model that predicts biomass at a regional scale. 
 
 This project aims to:
