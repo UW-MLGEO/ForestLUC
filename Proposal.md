@@ -3,9 +3,12 @@
 ## Scientific question 
 Central Kalimantan contains some of Indonesia’s most carbon-dense forests, yet the region faces rapid land use change from deforestation and forest degradation. Understanding how much above‑ground biomass and carbon the region stores is crucial for carbon accounting, forest monitoring, and land‑use planning. Field-based biomass measurements are spatially limited, making remote sensing approaches essential for regional-scale assessment.
 
+-------------------------------------------------------------
+
 ALTERNATIVE:
 Sulawesi has had rapid economic growth, being Indonesia's fastest growing economy as of 2025 (https://kadin.id/en/data-dan-statistik/profile-ekonomi-provinsi/). With it's main exports being basic metals and agriculture, however, it's carbon-dense forests face rapid deforestation due to land use changes. Understanding the carbon stocks through above ground biomass tracking is essential for land-use planning and carbon accounting. Due to field-based biomass measurements being spatially limited, the core data collection comes from remote sensing to address the regional-scale assessment. 
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+-------------------------------------------------------------
 
 This project aims to develop and test a remote sensing-based model that can estimate global aboveground biomass (AGB) carbon density over time. The workflow, adapted from an open‑source model by Farahani (2025), combines satellite‑derived vegetation indices, canopy structure metrics, land‑cover information, and terrain data to train a machine‑learning model that predicts biomass at a regional scale. 
 
@@ -23,7 +26,17 @@ Estimating global aboveground biomass carbon density over time using remote sens
 
 Remote Sensing Techniques
 - Multi-Sensor Imagery: High-resolution satellite data (10 m) from sources like GEDI and Sentinel-2 are utilized to capture biomass density, canopy height, and cover (Weber et al., 2025) (Weber et al., 2024).
+
+----------------------------------
+  
+- Regional AGB model: It compares random forest, support vector machine, and regression-kriging models, with the best model achieving an R^2 of 0.61 and RMSE of 23.99 Mg/Ha (Tiwari et al., 2025)
+
+----------------------------------
+
 - Deep Learning Models: Custom architectures, such as Feature Pyramid Networks, enable the prediction of biomass density with improved accuracy, achieving a mean absolute error of 26.1 Mg/ha (Weber et al., 2025).
+
+-------------------------
+- Model transferability: Sentinel-1, Sentinel-2, and SRTM to predict forest AGB, evaluating model transfer between regions by model retraining (Wang et al., 2026).
   
 Long-Term Monitoring
 - Decadal Analysis: Combining microwave and optical observations allows for the creation of long-term biomass records, essential for understanding carbon dynamics over decades (Favrichon et al., 2025).
@@ -46,6 +59,23 @@ All five papers were verified by searching and downloading a copy through UW lib
 
 ## The two nearest neighbors
 <rubric: Two studies identified as the closest to your project, each summarized in one or two sentences (data, method, evaluation, main result). A table compares your project with each on data, region or period, method, evaluation and question, and one sentence of the form “Unlike [A] and [B], we …” names a difference that is specific and true.>
+
+------
+
+Wang 2026 and Tiwari 2025 seem to be very close. Wang builds predictor models for AGB in one region, and transfers it to another while maintaining the R^2 value (0.52 after full retraining). Tiwari created predictor models using machine learning (random forest) and regression kriging to make an AGB map, with the best model demonstrating 0.61 R^2 and 23.99 Mg/Ha.
+Wang: 
+-data: ESA CEDA Archive Global Datasets of Aboveground Biomass for years 2007, 2010, 2015-2022 v6.0.
+-method: two different regression models; RF (bootstrap sampling trees, aggregating prediction values from all trees) and XGBoost (in tandem with complex regression, made to incorporate optimization strategies like regularization, pruning, parallel computing).
+-evaluation/question: How can machine learning models involving remote sensing be transferable reliably to other regions? Found the XGBoost model to be more accurate (R^2 higher and RMSE smaller) due to more advanced optimization.
+-Difference: While they also built predictor models and selected the best one, we want to build models to predict future AGB values with accuracy allowing for carbon accounting, not question whether or not the model is transferable.
+Tiwari:
+-data: Posted publicly on OSF (Open Science Framework). Includes code for RF, RMSE and R^2 bias, SVM, and train and test.
+-Method: Creation of multiple models for AGB, using different machine learning techniques (RF, RF regression kriging, and support vector machine regression kriging (creation of surface from data points while taking into account spatial correlation, that is the likelihood of similarities based on proximity)).
+-Evaluation/question: What is the best AGB modeling technique for large datasets among machine learning models? Support vector machine regression kriging (SVMRK) proved most accurate with R^2 of 0.61, using a combination of Landsat and ICESat-2 data.
+-Difference: While Tiwari wanted to figure out what model is the most accurate to utilize two large-scale datasets in creation of one AGB map, we want to select the best model for large-scale datasets to predict future AGB density.
+
+
+------
 
 ## Data corpus and AI readiness
 <rubric: Provider, version and license of each dataset; what one sample is; how many independent units there are (stations, events, years, basins). The corpus is scored on the 11 criteria of the AI-ready data rubric (A1 to A4, B1 to B7) with one line of evidence each. The two lowest scores are named with a plan to raise them, and the planned out-of-domain test is stated with its axis (statistical, spatiotemporal or physical) and why it fits the question.>
