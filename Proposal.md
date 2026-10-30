@@ -1,12 +1,7 @@
 # Project proposal 
 
 ## Scientific question 
-Central Kalimantan contains some of Indonesia’s most carbon-dense forests, yet the region faces rapid land use change from deforestation and forest degradation. Understanding how much above‑ground biomass and carbon the region stores is crucial for carbon accounting, forest monitoring, and land‑use planning. Field-based biomass measurements are spatially limited, making remote sensing approaches essential for regional-scale assessment.
-
--------------------------------------------------------------
-
-ALTERNATIVE:
-Sulawesi has had rapid economic growth, being Indonesia's fastest growing economy as of 2025 (https://kadin.id/en/data-dan-statistik/profile-ekonomi-provinsi/). With it's main exports being basic metals and agriculture, however, it's carbon-dense forests face rapid deforestation due to land use changes. Understanding the carbon stocks through above ground biomass tracking is essential for land-use planning and carbon accounting. Due to field-based biomass measurements being spatially limited, the core data collection comes from remote sensing to address the regional-scale assessment. 
+Central Sulawesi has had rapid economic growth, being Indonesia's fastest growing economy as of 2025 (https://kadin.id/en/data-dan-statistik/profile-ekonomi-provinsi/). With it's main exports being basic metals and agriculture, however, it's carbon-dense forests face rapid deforestation due to land use changes. Understanding the carbon stocks through above ground biomass tracking is essential for land-use planning and carbon accounting. Due to field-based biomass measurements being spatially limited, the core data collection comes from remote sensing to address the regional-scale assessment. 
 
 -------------------------------------------------------------
 
@@ -58,51 +53,44 @@ All five papers were verified by searching and downloading a copy through UW lib
   Song, J., Liu, X., Adingo, S., Guo, Y., & Li, Q. (2024). A Comparative Analysis of Remote Sensing Estimation of Aboveground Biomass in Boreal Forests Using Machine Learning Modeling and Environmental Data. Sustainability, 16(16), 7232. https://doi.org/10.3390/su16167232
 
 ## The two nearest neighbors
-<rubric: Two studies identified as the closest to your project, each summarized in one or two sentences (data, method, evaluation, main result). A table compares your project with each on data, region or period, method, evaluation and question, and one sentence of the form “Unlike [A] and [B], we …” names a difference that is specific and true.>
-
-------
-
 Wang 2026 and Tiwari 2025 seem to be very close. Wang builds predictor models for AGB in one region, and transfers it to another while maintaining the R^2 value (0.52 after full retraining). Tiwari created predictor models using machine learning (random forest) and regression kriging to make an AGB map, with the best model demonstrating 0.61 R^2 and 23.99 Mg/Ha.
-Wang: 
--data: ESA CEDA Archive Global Datasets of Aboveground Biomass for years 2007, 2010, 2015-2022 v6.0.
--method: two different regression models; RF (bootstrap sampling trees, aggregating prediction values from all trees) and XGBoost (in tandem with complex regression, made to incorporate optimization strategies like regularization, pruning, parallel computing).
--evaluation/question: How can machine learning models involving remote sensing be transferable reliably to other regions? Found the XGBoost model to be more accurate (R^2 higher and RMSE smaller) due to more advanced optimization.
--Difference: While they also built predictor models and selected the best one, we want to build models to predict future AGB values with accuracy allowing for carbon accounting, not question whether or not the model is transferable.
-Tiwari:
--data: Posted publicly on OSF (Open Science Framework). Includes code for RF, RMSE and R^2 bias, SVM, and train and test.
--Method: Creation of multiple models for AGB, using different machine learning techniques (RF, RF regression kriging, and support vector machine regression kriging (creation of surface from data points while taking into account spatial correlation, that is the likelihood of similarities based on proximity)).
--Evaluation/question: What is the best AGB modeling technique for large datasets among machine learning models? Support vector machine regression kriging (SVMRK) proved most accurate with R^2 of 0.61, using a combination of Landsat and ICESat-2 data.
--Difference: While Tiwari wanted to figure out what model is the most accurate to utilize two large-scale datasets in creation of one AGB map, we want to select the best model for large-scale datasets to predict future AGB density.
 
+Wang: 
+- Data: ESA CEDA Archive Global Datasets of Aboveground Biomass for years 2007, 2010, 2015-2022 v6.0.
+- Method: two different regression models; RF (bootstrap sampling trees, aggregating prediction values from all trees) and XGBoost (in tandem with complex regression, made to incorporate optimization strategies like regularization, pruning, parallel computing).
+- Evaluation/question: How can machine learning models involving remote sensing be transferable reliably to other regions? Found the XGBoost model to be more accurate (R^2 higher and RMSE smaller) due to more advanced optimization.
+- Difference: While they also built predictor models and selected the best one, we want to build models to predict future AGB values with accuracy allowing for carbon accounting, not question whether or not the model is transferable.
+
+Tiwari:
+- Data: Posted publicly on OSF (Open Science Framework). Includes code for RF, RMSE and R^2 bias, SVM, and train and test.
+- Method: Creation of multiple models for AGB, using different machine learning techniques (RF, RF regression kriging, and support vector machine regression kriging (creation of surface from data points while taking into account spatial correlation, that is the likelihood of similarities based on proximity)).
+- Evaluation/question: What is the best AGB modeling technique for large datasets among machine learning models? Support vector machine regression kriging (SVMRK) proved most accurate with R^2 of 0.61, using a combination of Landsat and ICESat-2 data.
+- Difference: While Tiwari wanted to figure out what model is the most accurate to utilize two large-scale datasets in creation of one AGB map, we want to select the best model for large-scale datasets to predict future AGB density.
 
 ------
 
 ## Data corpus and AI readiness
-<rubric: Provider, version and license of each dataset; what one sample is; how many independent units there are (stations, events, years, basins). The corpus is scored on the 11 criteria of the AI-ready data rubric (A1 to A4, B1 to B7) with one line of evidence each. The two lowest scores are named with a plan to raise them, and the planned out-of-domain test is stated with its axis (statistical, spatiotemporal or physical) and why it fits the question.>
-
 The datasets to be used in this project are described below based on their roles: 
 
-Study boundary: The region of interest (ROI) is the province of Central Kalimantan, and will be extracted from the FAO/GAUL_SIMPLIFIED_500m/2015/level1 dataset. All datasets will be clipped to this GAUL‑derived ROI.
+Study boundary: The region of interest (ROI) is the province of Central Sulawesi, and will be extracted from the FAO/GAUL_SIMPLIFIED_500m/2025/level1 dataset. All datasets will be clipped to this GAUL‑derived ROI. This data is provided by FAO, version 2025. To test for replicability, the dataset from WHRC/biomass/tropical will also be used and the same workflow will also be applied. This data is provided by the WHRC, version 2012. 
 
 Reference data: The NASA ORNL Biomass Carbon Density v1 product serves as the dependent variable in this study, providing the reference values of AGB used to train and validate the predictive model. This dataset represents biomass conditions for 2010. It offers a spatially continuous estimate of AGB across the entire region, serving as the baseline against which model performance is assessed and as the foundation for developing subsequent biomass and carbon‑stock predictions.
 
 Predictor variables: These will be derived from several remote sensing products that together capture vegetation condition, canopy structure, land‑use characteristics, and terrain context, such as the following: 
-- MODIS MOD13Q1 provides Normalized Difference Vegetation Index (NDVI) and Enhanced Vegetation Index (EVI), which reflect vegetation greenness and overall productivity
-- MODIS MOD15A2H provides Leaf Area Index (LAI) and Fraction of Photosynthetically Active Radiation (FPAR), two indicators of canopy density and light absorption that relate to leaf area and biomass accumulation
-- Land‑cover information from MODIS MCD12Q1 helps distinguish between forests, peatlands, plantations, and other land‑use types, improving the model’s ability to differentiate biomass patterns across diverse landscapes
-- Elevation data from the USGS GTOPO30 DEM adds terrain‑related information that influences vegetation structure
+- MODIS MOD13Q1 provides Normalized Difference Vegetation Index (NDVI) and Enhanced Vegetation Index (EVI), which reflect vegetation greenness and overall productivity. Data provider is NASA LP DAAC at the USGS EROS Center, dataset availability: 2000-02-18T00:00:00 - 2026-09-30T00:00:00. 
+- MODIS MOD15A2H provides Leaf Area Index (LAI) and Fraction of Photosynthetically Active Radiation (FPAR), two indicators of canopy density and light absorption that relate to leaf area and biomass accumulation. Data provider is NASA LP DAAC at the USGS EROS Center, dataset availability: 2000-02-18T00:00:00 - 2026-10-16T00:00:00. 
+- Land‑cover information from MODIS MCD12Q1 helps distinguish between forests, peatlands, plantations, and other land‑use types, improving the model’s ability to differentiate biomass patterns across diverse landscapes. Data provider is NASA LP DAAC at the USGS EROS Center, dataset availability: 2001-01-01T00:00:00 - 2025-01-01T00:00:00. 
+- Elevation data from the USGS GTOPO30 DEM adds terrain‑related information that influences vegetation structure. Data provider is United States Geological Survey, dataset availability: 1996-01-01T00:00:00 - 1996-01-01T00:00:00. 
 
 ## Reproducible start 
 Team's GitHub repository: https://github.com/UW-MLGEO/ForestLUC 
 
 ## Plan and roles 
-<rubric: A baseline (the simplest method that could answer the question), the machine-learning approach to try, the metric and why it matches the question, the main risk with a fallback, a timeline to the December presentation, and who does what (CRediT roles, every member named).>
+Satellite datasets will be filtered to the dry season so the vegetation signals are clearer, scaled appropriately, and clipped to the Central Sulawesi boundary. Layers such as vegetation indices, canopy structure metrics, land cover, and elevation will be combined into a single multi‑band image. From this, training samples are taken and used to fit a Random Forest regression model that predicts above‑ground biomass. The model is first tested by predicting biomass for the same baseline period (i.e., 2010) and comparing it with the reference biomass map to check accuracy. Once validated, the model is applied to later years to generate new biomass estimates. These biomass predictions are then converted into carbon stock, allowing changes over time to be assessed across the landscape.
 
-Satellite datasets will be filtered to the dry season so the vegetation signals are clearer, scaled appropriately, and clipped to the Central Kalimantan boundary. Layers such as vegetation indices, canopy structure metrics, land cover, and elevation will be combined into a single multi‑band image. From this, training samples are taken and used to fit a Random Forest regression model that predicts above‑ground biomass. The model is first tested by predicting biomass for the same baseline period (i.e., 2010) and comparing it with the reference biomass map to check accuracy. Once validated, the model is applied to later years to generate new biomass estimates. These biomass predictions are then converted into carbon stock, allowing changes over time to be assessed across the landscape.
 
 ## AI-use disclosure and reflection 
 - SciSpace was used to conduct literature search and review
 - Google Notebook was used to summarize two selected literatures to complete the "two nearest neighbors" section 
-- XXX was used to complete the "Data corpus and AI readiness" and "Plan and roles" sections
 - This proposal was reviewed by XXX and below are the output of the assistant. The assistant was able to XXX. The assistant incorrectly reviewed the XXX and scored XXX. 
 
