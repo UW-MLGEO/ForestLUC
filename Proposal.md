@@ -92,7 +92,7 @@ Satellite datasets will be filtered to the dry season so the vegetation signals 
 ## AI-use disclosure and reflection 
 - SciSpace was used to conduct literature search and review
 - Google Notebook was used to summarize two selected literatures to complete the "two nearest neighbors" section 
-- The dataset for this proposal was reviewed by CoPilot and below are the output of the assistant.
+- The dataset for this proposal was reviewed by CoPilot on November 2, 2026, and below are the output of the assistant.
 
 AI-readiness scoring for Notebooks/Download_data.ipynb
 Assessment basis: the notebook source, its saved execution outputs, README.md, and ai_ready_rubric_for_agents.md.
