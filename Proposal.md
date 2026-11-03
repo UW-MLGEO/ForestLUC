@@ -92,5 +92,31 @@ Satellite datasets will be filtered to the dry season so the vegetation signals 
 ## AI-use disclosure and reflection 
 - SciSpace was used to conduct literature search and review
 - Google Notebook was used to summarize two selected literatures to complete the "two nearest neighbors" section 
-- This proposal was reviewed by XXX and below are the output of the assistant. The assistant was able to XXX. The assistant incorrectly reviewed the XXX and scored XXX. 
+- The dataset for this proposal was reviewed by CoPilot and below are the output of the assistant.
 
+AI-readiness scoring for Notebooks/Download_data.ipynb
+Assessment basis: the notebook source, its saved execution outputs, README.md, and ai_ready_rubric_for_agents.md.
+
+Criterion	Score	Evidence	What is missing
+A1 Provenance	1/2	README.md lists sources, citations, licenses, and DOIs for GAUL, NASA ORNL biomass, MODIS, GTOPO30, and WHRC. The notebook uses the Earth Engine collections NASA/ORNL/biomass_carbon_density/v1, MODIS/061/MOD13Q1, MODIS/061/MOD15A2H, MODIS/061/MCD12Q1, and USGS/GTOPO30.	Retrieval dates and complete dataset version metadata are missing. The notebook does not explicitly state whether any data are synthetic or augmented.
+A2 Homogenization	1/2	Download_data.ipynb scales NDVI/EVI by 0.0001, LAI by 0.1, and FPAR by 0.01; it uses a 2010–2011 date window, 500 m sampling, and a defined Sulawesi Tengah ROI. README.md documents variable units.	No complete check of reference frames, coordinate conventions, time-base consistency, instrument/processing changes, or corrections across all sources.
+A3 Quality and gaps	1/2	The notebook uses dropNulls=True, filters paired values with np.isfinite, and raises an error if no valid samples remain. It also retrieves the agb_uncertainty band.	Quality flags, sentinel values, detection limits, missing-value causes, and uncertainty statistics are not reported.
+A4 Structure and metadata	1/2	The notebook is an executable Jupyter notebook. Its sampled rows contain AGC and NDVI, and the execution output reports 14,493 valid paired samples. README.md documents variable names, roles, units, and dtypes.	The downloaded/sample dataset is not persisted as a clearly described file. Metadata are written as README YAML-like text rather than a machine-readable metadata file.
+B1 Diversity	1/2	The notebook identifies one administrative study region, Sulawesi Tengah, and one target year, 2010. The project includes multiple predictor and target sources listed in README.md.	The notebook does not count independent units or describe the range of regions, seasons, event types, magnitudes, or instruments.
+B2 Distribution	1/2	The notebook reports AGC median 97.65 Mg C/ha, AGC 5th–95th percentile 29.23–148.16 Mg C/ha, upper-tail share 5.0%, and NDVI median 0.816 with 5th–95th percentile 0.540–0.880. It also creates target/input histograms and an AGC–NDVI scatterplot.	Distribution summaries are limited to AGC and NDVI. There is no distribution analysis for the other predictors, class frequencies, or comparison with the intended deployment population.
+B3 Noise	0/2	Not found. The notebook retrieves an uncertainty band but does not quantify it.	Instrumental noise, processing noise, natural variability, or signal-to-noise ratios are not documented.
+B4 Augmentation	0/2	Not found. The notebook performs scaling and temporal aggregation, but does not describe augmentation or physics-preserving transformations.	List allowed and disallowed transformations, including whether synthetic samples or noise injection are used.
+B5 Labels	0/2	The target is the NASA ORNL agb raster, and the notebook retrieves agb_uncertainty, but label-generation and consistency procedures are not documented.	Explain who produced the labels, how they were generated or validated, label uncertainty, and whether unlabeled data can support self-supervised learning.
+B6 Dimensionality	1/2	The executed notebook reports N = 14,493 paired samples. For the analyzed sample, each row contains two values: AGC and NDVI, so D = 2 and N/D = 7,246.5.	No intrinsic-dimensionality estimate, such as PCA variance explained. The two-variable dimension applies only to this notebook’s diagnostic sample, not the complete planned predictor table.
+B7 Partitioning	0/2	README.md describes future within-domain and out-of-domain applications, but the notebook contains no train/validation/test split.	No shipped splits, independent-unit split strategy, held-out domain axis, or proof that preprocessing statistics are calculated from training data only.
+
+Total
+7/22
+
+Three lowest-scoring criteria
+The lowest score is 0/2 for:
+
+B3 Noise — add documented sensor/processing noise and uncertainty summaries.
+B4 Augmentation — document permitted physics-preserving transformations and prohibited transformations.
+B5 Labels — document label origin, production method, validation, and uncertainty.
+B7 Partitioning also scores 0/2 and should be addressed at the same time by adding reproducible train/validation/test splits based on independent spatial blocks.

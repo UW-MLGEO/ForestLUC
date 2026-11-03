@@ -64,3 +64,5 @@ mlgeo-synth = { url = "https://github.com/geo-smart/mlgeo-book/archive/247bc014c
 tsfel = "*"
 seisbench = "*"
 torchinfo = "*"
+earthengine-api = ">=1.7.51, <2"
+geemap = ">=0.38.9, <0.39"
