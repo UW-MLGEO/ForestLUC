@@ -1,0 +1,99 @@
+dataset_name: Central_Sulawesi_AGC_ML_Dataset_2010
+
+study_area:
+  province: Sulawesi Tengah
+  country: Indonesia
+
+retrieval:
+  platform: Google Earth Engine
+  retrieval_date: 2026-11-02
+  access_method: Earth Engine Python API
+
+data_generation:
+  synthetic_data: false
+  augmented_data: false
+
+  description: >
+    All observations originate from published remote-sensing
+    products accessed through Google Earth Engine. No synthetic
+    observations, simulated labels, oversampling, or AI-generated
+    predictors were introduced.
+
+sources:
+
+  - name: FAO GAUL Simplified 500m Level 1
+    earth_engine_id: FAO/GAUL_SIMPLIFIED_500m/2025/level1
+    version: 2025
+    role: study_area_boundary
+    license: CC-BY-4.0
+    citation: FAO. 2025. Global Administrative Unit Layers (GAUL). https://data.apps.fao.org. 
+
+  - name: NASA ORNL Biomass Carbon Density
+    earth_engine_id: NASA/ORNL/biomass_carbon_density/v1
+    version: v1
+    role: target_variable
+    license: Public Domain
+    citation: Spawn, S.A., and H.K. Gibbs. 2020. Global Aboveground and Belowground Biomass Carbon Density Maps for the Year 2010. ORNL DAAC, Oak Ridge, Tennessee, USA
+    doi: https://doi.org/10.3334/ORNLDAAC/1763 
+    data user guide: https://d3o6w55j8uz1ro.cloudfront.net/s3-d0f68fa49c8cba12794bb586349f2341/ornl-cumulus-prod-public.s3.us-west-2.amazonaws.com/global_vegetation/Global_Maps_C_Density_2010/comp/Global_Maps_C_Density_2010.pdf?A-userid=None&Expires=1794268615&Signature=hb6zJsoiLYfIZP~dAHUEKnUKm2Uea-E6sowuGkPHhcPkn0Gl1ZzJCqw55P4-dlEdlj2c2TT~Vq6MWHe7f1j0hmwuLNWeF77tGNJlhC5ejY-beF~J~2l-zF7kE0spyyekdW~LJSubVvdKBGtCLf7OzDPUWO35vWuxoL3RRr7h6XMQ2LcXjkLLZY3nCVWSfEssfQKwfTv0Oib15BJtAgWNBtedkK5vXpTK5d6Y-G29ySbkL3aJ58NEmNdlN207-JUyj~P8asA8g4kcigdHrwvA21OD25lHQCezmIRoM~tY~QRtgmfe8hFwxTzAKk3tWXnOdh3q2xwH8XkFKfvJ9dg-sg__&Key-Pair-Id=K36G5SX14Z457N
+
+  - name: MOD13Q1
+    earth_engine_id: MODIS/061/MOD13Q1
+    version: 061
+    role: vegetation_indices
+    license: Public Domain  
+    citation: Didan,  Kamel. (2021). MODIS/Terra Vegetation Indices 16-Day L3 Global 250m SIN Grid V061 [Data set]. NASA Land Processes Distributed Active Archive Center. https://doi.org/10.5067/MODIS/MOD13Q1.061
+    doi: https://doi.org/10.5067/MODIS/MOD13Q1.061
+
+  - name: MOD15A2H
+    earth_engine_id: MODIS/061/MOD15A2H
+    version: 061
+    role: vegetation_structure
+    license: Public Domain
+    citation: Myneni,  Ranga, Knyazikhin,  Yuri, & Park,  Taejin. (2021). MODIS/Terra Leaf Area Index/FPAR 8-Day L4 Global 500m SIN Grid V061 [Data set]. NASA Land Processes Distributed Active Archive Center. https://doi.org/10.5067/MODIS/MOD15A2H.061
+    doi: https://doi.org/10.5067/MODIS/MOD15A2H.061 
+
+  - name: MCD12Q1
+    earth_engine_id: MODIS/061/MCD12Q1
+    version: 061
+    role: landcover
+    license: Public Domain
+    citation: Friedl,  Mark, & Sulla-Menashe,  Damien. (2022). MODIS/Terra+Aqua Land Cover Type Yearly L3 Global 500m SIN Grid V061 [Data set]. NASA Land Processes Distributed Active Archive Center. https://doi.org/10.5067/MODIS/MCD12Q1.061
+    doi: https://doi.org/10.5067/MODIS/MCD12Q1.061 
+
+  - name: GTOPO30
+    earth_engine_id: USGS/GTOPO30
+    role: terrain
+    license: Public Domain
+    citation: GTOPO30 DEM courtesy of the U.S. Geological Survey
+    doi: https://doi.org/10.5066/F7DF6PQS
+
+  - name: WHRC Pantropical National Level Carbon Stock Dataset
+    earth_engine_id: WHRC/biomass/tropical
+    role: alternate_reference_layer
+    license: Public Domain
+    citation: A. Baccini, S J. Goetz, W.S. Walker, N. T. Laporte, M. Sun, D. Sulla-Menashe, J. Hackler, P.S.A. Beck, R. Dubayah, M.A. Friedl, S. Samanta and R. A. Houghton. Estimated carbon dioxide emissions from tropical deforestation improved by carbon-density maps. 2012 Nature Climate Change, 
+    doi: https://doi.org/10.1038/NCLIMATE1354
+
+    description: >
+    Independent tropical biomass map used to test for reproducibility. 
+    Not used as the primary target.
+
+processing:
+
+  temporal_window:
+    start_date: 2010-01-01
+    end_date: 2011-01-01
+
+  spatial_resolution_m: 500
+
+  aggregations:
+    vegetation_indices: median
+    lai_fpar: median
+    landcover: mode
+
+  scaling:
+    ndvi: 0.0001
+    evi: 0.0001
+    lai: 0.1
+    fpar: 0.01

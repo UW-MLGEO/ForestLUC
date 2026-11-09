@@ -1,0 +1,83 @@
+agb_carbon_mg_ha:
+  role: target
+  source_dataset: NASA ORNL Biomass Carbon Density
+  source_band: agb
+  units: Mg C ha-1
+  dtype: float32
+  description: Aboveground biomass carbon density
+
+agb_uncertainty_mg_ha:
+  role: target_uncertainty
+  source_dataset: NASA ORNL Biomass Carbon Density
+  source_band: agb_uncertainty
+  units: Mg C ha-1
+  dtype: float32
+  description: Published uncertainty associated with biomass estimate
+
+ndvi:
+  role: predictor
+  source_dataset: MOD13Q1
+  source_band: NDVI
+  units: unitless
+  dtype: float32
+  description: Normalized Difference Vegetation Index
+  scale_factor_applied: 0.0001
+
+evi:
+  role: predictor
+  source_dataset: MOD13Q1
+  source_band: EVI
+  units: unitless
+  dtype: float32
+  description: Enhanced Vegetation Index
+  scale_factor_applied: 0.0001
+
+lai_m2_m2:
+  role: predictor
+  source_dataset: MOD15A2H
+  source_band: Lai_500m
+  units: m2 m-2
+  dtype: float32
+
+fpar_fraction:
+  role: predictor
+  source_dataset: MOD15A2H
+  source_band: Fpar_500m
+  units: fraction
+  dtype: float32
+
+landcover_igbp:
+  role: predictor
+  source_dataset: MCD12Q1
+  source_band: LC_Type1
+  units: IGBP class code
+  dtype: int16
+
+elevation_m:
+  role: predictor
+  source_dataset: GTOPO30
+  source_band: elevation
+  units: m
+  dtype: float32
+
+longitude:
+  role: coordinate
+  units: degrees_east
+  dtype: float64
+
+latitude:
+  role: coordinate
+  units: degrees_north
+  dtype: float64
+
+spatial_block_id:
+  role: partition_group
+  dtype: string
+
+split:
+  role: partition
+  dtype: string
+  allowed_values:
+    - train
+    - validation
+    - test

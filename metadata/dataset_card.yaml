@@ -1,0 +1,32 @@
+name: Central Sulawesi AGC Dataset
+
+version: 1.0
+
+description: >
+  AI-ready dataset for predicting aboveground carbon density
+  in Sulawesi Tengah using MODIS vegetation indices,
+  vegetation structure variables, land cover, and elevation.
+
+purpose:
+  primary_task: biomass_regression
+  target_variable: agb_carbon_mg_ha
+
+geographic_extent:
+  country: Indonesia
+  province: Sulawesi Tengah
+
+temporal_extent:
+  predictors_year: 2010
+  target_year: 2010
+
+spatial_resolution_m: 500
+
+sample_definition: >
+  One sample represents a 500 m pixel containing
+  biomass carbon estimates and coincident predictor variables.
+
+coordinate_reference_system:
+  EPSG:4326
+
+license:
+  mixed-source
