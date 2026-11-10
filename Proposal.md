@@ -99,15 +99,25 @@ Assessment basis: the notebook source, its saved execution outputs, README.md, a
 
 Criterion	Score	Evidence	What is missing
 A1 Provenance	1/2	README.md lists sources, citations, licenses, and DOIs for GAUL, NASA ORNL biomass, MODIS, GTOPO30, and WHRC. The notebook uses the Earth Engine collections NASA/ORNL/biomass_carbon_density/v1, MODIS/061/MOD13Q1, MODIS/061/MOD15A2H, MODIS/061/MCD12Q1, and USGS/GTOPO30.	Retrieval dates and complete dataset version metadata are missing. The notebook does not explicitly state whether any data are synthetic or augmented.
+
 A2 Homogenization	1/2	Download_data.ipynb scales NDVI/EVI by 0.0001, LAI by 0.1, and FPAR by 0.01; it uses a 2010–2011 date window, 500 m sampling, and a defined Sulawesi Tengah ROI. README.md documents variable units.	No complete check of reference frames, coordinate conventions, time-base consistency, instrument/processing changes, or corrections across all sources.
+
 A3 Quality and gaps	1/2	The notebook uses dropNulls=True, filters paired values with np.isfinite, and raises an error if no valid samples remain. It also retrieves the agb_uncertainty band.	Quality flags, sentinel values, detection limits, missing-value causes, and uncertainty statistics are not reported.
+
 A4 Structure and metadata	1/2	The notebook is an executable Jupyter notebook. Its sampled rows contain AGC and NDVI, and the execution output reports 14,493 valid paired samples. README.md documents variable names, roles, units, and dtypes.	The downloaded/sample dataset is not persisted as a clearly described file. Metadata are written as README YAML-like text rather than a machine-readable metadata file.
+
 B1 Diversity	1/2	The notebook identifies one administrative study region, Sulawesi Tengah, and one target year, 2010. The project includes multiple predictor and target sources listed in README.md.	The notebook does not count independent units or describe the range of regions, seasons, event types, magnitudes, or instruments.
+
 B2 Distribution	1/2	The notebook reports AGC median 97.65 Mg C/ha, AGC 5th–95th percentile 29.23–148.16 Mg C/ha, upper-tail share 5.0%, and NDVI median 0.816 with 5th–95th percentile 0.540–0.880. It also creates target/input histograms and an AGC–NDVI scatterplot.	Distribution summaries are limited to AGC and NDVI. There is no distribution analysis for the other predictors, class frequencies, or comparison with the intended deployment population.
+
 B3 Noise	0/2	Not found. The notebook retrieves an uncertainty band but does not quantify it.	Instrumental noise, processing noise, natural variability, or signal-to-noise ratios are not documented.
+
 B4 Augmentation	0/2	Not found. The notebook performs scaling and temporal aggregation, but does not describe augmentation or physics-preserving transformations.	List allowed and disallowed transformations, including whether synthetic samples or noise injection are used.
+
 B5 Labels	0/2	The target is the NASA ORNL agb raster, and the notebook retrieves agb_uncertainty, but label-generation and consistency procedures are not documented.	Explain who produced the labels, how they were generated or validated, label uncertainty, and whether unlabeled data can support self-supervised learning.
+
 B6 Dimensionality	1/2	The executed notebook reports N = 14,493 paired samples. For the analyzed sample, each row contains two values: AGC and NDVI, so D = 2 and N/D = 7,246.5.	No intrinsic-dimensionality estimate, such as PCA variance explained. The two-variable dimension applies only to this notebook’s diagnostic sample, not the complete planned predictor table.
+
 B7 Partitioning	0/2	README.md describes future within-domain and out-of-domain applications, but the notebook contains no train/validation/test split.	No shipped splits, independent-unit split strategy, held-out domain axis, or proof that preprocessing statistics are calculated from training data only.
 
 Total
@@ -120,3 +130,45 @@ B3 Noise — add documented sensor/processing noise and uncertainty summaries.
 B4 Augmentation — document permitted physics-preserving transformations and prohibited transformations.
 B5 Labels — document label origin, production method, validation, and uncertainty.
 B7 Partitioning also scores 0/2 and should be addressed at the same time by adding reproducible train/validation/test splits based on independent spatial blocks.
+
+_______________________________________________________________________
+
+Updates to the AI-ready dataset was done on November 9, 2026 and below are the updated score against the AI-ready rubric done by CoPilot:
+
+Total: 13/22
+
+Criterion	Score	Evidence	What is missing
+A1. Provenance	2/2	provenance.yaml names the Google Earth Engine platform, retrieval date 2026-11-02, source datasets, versions, licenses, citations, and DOIs. It explicitly states synthetic_data: false and augmented_data: false.	Nothing essential for this criterion.
+
+A2. Homogenization	1/2	dataset_card.yaml documents WGS84/EPSG:4326, coordinate units, annual 2010 temporal harmonization, aggregation methods, scale factors, native resolutions, and a 500 m analysis grid. It also acknowledges that no cross-sensor bias correction was applied.	Add a systematic check of coordinate/reference-frame consistency, temporal coverage, resampling behavior, and sensor/processing changes. Document whether native-resolution differences and cross-sensor biases were empirically assessed.
+
+A3. Quality and gaps	1/2	quality_report.yaml reports zero missing values and zero -999/-9999 sentinels for every column, QA-flag distributions, and target uncertainty statistics. The notebook’s quality-report cell generates these checks.	The report does not identify values below detection limits, invalid physical ranges, or the causes of gaps/quality flags. It also does not interpret whether QA categories indicate acceptable or poor observations.
+
+A4. Structure and metadata	2/2	dataset_card.yaml identifies data/observations.parquet as Apache Parquet, defines one row as one 500 m pixel, and specifies 17 columns. variables.yaml provides machine-readable roles, source bands, units, dtypes, and scale factors.	Nothing essential for this criterion.
+
+B1. Diversity	1/2	dataset_card.yaml reports 170 spatial blocks, 7 land-cover classes, and ranges for carbon, elevation, NDVI, EVI, LAI, and FPAR. The notebook reports 170 unique spatial blocks.	The dataset covers only one province and one year. It does not quantify seasonal, event, instrument, or broader geographic diversity, nor compare coverage with the intended deployment population.
+
+B2. Distribution	1/2	distribution_report.yaml gives min, p05, median, p95, and max for the target and key predictors. It also reports all land-cover counts; the rarest class has 5 of 974 samples, or about 0.51%.	Add an explicit comparison with the expected population or deployment domain, class-imbalance handling, and distributions for all important inputs, including QA variables and uncertainty.
+
+B3. Noise	1/2	quality_report.yaml reports published biomass uncertainty: mean 33.11, median 38.24, standard deviation 19.01, p05 0.35, p95 56.49, and maximum 88.75 Mg C ha⁻¹.	Instrumental/processing noise is not separated from natural spatial variability. No sensor noise model, measurement-error estimate, or signal-to-noise ratio is provided.
+
+B4. Augmentation	0/2	provenance.yaml states that no synthetic observations, simulated labels, oversampling, or AI-generated predictors were introduced.	The documentation does not list physics-preserving transformations that would be acceptable, or transformations that would break the physical meaning of the data.
+
+B5. Labels	1/2	provenance.yaml identifies NASA ORNL Biomass Carbon Density v1 as the target source and provides its citation, DOI, and role. variables.yaml identifies the target and its published uncertainty.	No label-consistency analysis, validation against independent observations, annotator/production uncertainty analysis, or explicit discussion of unlabeled-data/self-supervised learning is included.
+
+B6. Dimensionality	2/2	dimensionality_report.yaml reports N=974, D=6, and N/D=162.33. PCA variance explained is also reported: the first component explains approximately 99.9961%. The notebook computes this report.	Nothing essential for the stated criterion. It would be useful to explain why the first component dominates, but the required measurements are present.
+
+B7. Partitioning	1/2	The notebook creates train/validation/test splits by unique spatial_block_id, with approximately 70%/15%/15% block allocation. The saved data contains the split column, with counts of 693 train, 136 validation, and 145 test samples. variables.yaml defines allowed split values.	The split is spatially independent, but the notebook computes median imputation and PCA using the full dataset rather than training data only. It also does not explicitly define the test axis as statistical, spatiotemporal, or physical, and does not provide a shipped preprocessing pipeline fitted only on training data.
+
+Lowest-scoring criteria
+
+B4 — Augmentation: 0/2
+Add an augmentation policy describing allowed physics-preserving transformations and prohibited transformations.
+
+A2 — Homogenization: 1/2
+Add validation of cross-product alignment, resampling, temporal consistency, and sensor/processing bias.
+
+A3 — Quality and gaps: 1/2
+Add physical-range checks, detection-limit analysis, interpretation of QA flags, and documented causes of invalid or missing observations.
+
+There is a tie at the next-lowest score among several criteria, including B1, B2, B3, B5, and B7.
