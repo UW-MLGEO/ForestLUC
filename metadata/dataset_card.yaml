@@ -211,3 +211,109 @@ known_limitations:
   - No additional cross-sensor bias correction was applied beyond documented scale factors.
   - Residual differences in native spatial resolution may remain despite harmonization to a common 500 m analysis framework.
   - The dataset represents a random sample of valid pixels rather than a complete census of all pixels within Central Sulawesi.
+
+data_files:
+
+  observations:
+    path: data/observations.parquet
+    format: Apache Parquet
+
+sample_shape:
+
+  rows:
+    one_row_equals: one 500 m pixel observation
+
+  columns: 17
+
+diversity:
+
+  study_region:
+    province: Sulawesi Tengah
+    country: Indonesia
+
+  independent_units:
+
+    spatial_blocks: 170
+
+    landcover_classes: 7
+
+  environmental_range:
+
+    agb_carbon_mg_ha:
+      min: 0.64
+      max: 232.25
+
+    elevation_m:
+      min: 1
+      max: 2912
+
+    ndvi:
+      min: 0.225
+      max: 0.908
+
+    evi:
+      min: 0.165
+      max: 0.717
+
+    lai_m2_m2:
+      min: 0.2
+      max: 6.5
+
+    fpar_fraction:
+      min: 0.11
+      max: 0.93
+  
+distribution:
+
+  target_variable:
+
+    name: agb_carbon_mg_ha
+
+    p05: 32.11
+    median: 98.55
+    p95: 150.16
+
+  predictors:
+
+    ndvi:
+      p05: 0.572
+      median: 0.819
+      p95: 0.878
+
+    evi:
+      p05: 0.326
+      median: 0.522
+      p95: 0.637
+
+    lai_m2_m2:
+      p05: 0.9
+      median: 5.4
+      p95: 6.2
+
+    fpar_fraction:
+      p05: 0.365
+      median: 0.87
+      p95: 0.90
+
+    elevation_m:
+      p05: 25.65
+      median: 535
+      p95: 1554.7
+
+  landcover_distribution:
+
+    class_2: 808
+    class_8: 115
+    class_10: 23
+    class_11: 10
+    class_9: 7
+    class_14: 6
+    class_12: 5
+
+  rarest_landcover_class:
+
+    class_id: 12
+
+    count: 5
+
+    share_percent: 0.51
