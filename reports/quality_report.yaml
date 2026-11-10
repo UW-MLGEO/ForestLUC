@@ -1,0 +1,135 @@
+dataset_size: 974
+missing_values:
+  mod13_detailed_qa:
+    count: 0
+    percent: 0.0
+  evi:
+    count: 0
+    percent: 0.0
+  mod15_fparlai_qc:
+    count: 0
+    percent: 0.0
+  fpar_fraction:
+    count: 0
+    percent: 0.0
+  landcover_igbp:
+    count: 0
+    percent: 0.0
+  lai_m2_m2:
+    count: 0
+    percent: 0.0
+  ndvi:
+    count: 0
+    percent: 0.0
+  mod13_summary_qa:
+    count: 0
+    percent: 0.0
+  agb_carbon_mg_ha:
+    count: 0
+    percent: 0.0
+  agb_uncertainty_mg_ha:
+    count: 0
+    percent: 0.0
+  elevation_m:
+    count: 0
+    percent: 0.0
+  longitude:
+    count: 0
+    percent: 0.0
+  latitude:
+    count: 0
+    percent: 0.0
+  grid_col:
+    count: 0
+    percent: 0.0
+  grid_row:
+    count: 0
+    percent: 0.0
+  spatial_block_id:
+    count: 0
+    percent: 0.0
+  split:
+    count: 0
+    percent: 0.0
+sentinel_values:
+  mod13_detailed_qa:
+    '-9999': 0
+    '-999': 0
+  evi:
+    '-9999': 0
+    '-999': 0
+  mod15_fparlai_qc:
+    '-9999': 0
+    '-999': 0
+  fpar_fraction:
+    '-9999': 0
+    '-999': 0
+  landcover_igbp:
+    '-9999': 0
+    '-999': 0
+  lai_m2_m2:
+    '-9999': 0
+    '-999': 0
+  ndvi:
+    '-9999': 0
+    '-999': 0
+  mod13_summary_qa:
+    '-9999': 0
+    '-999': 0
+  agb_carbon_mg_ha:
+    '-9999': 0
+    '-999': 0
+  agb_uncertainty_mg_ha:
+    '-9999': 0
+    '-999': 0
+  elevation_m:
+    '-9999': 0
+    '-999': 0
+  longitude:
+    '-9999': 0
+    '-999': 0
+  latitude:
+    '-9999': 0
+    '-999': 0
+  grid_col:
+    '-9999': 0
+    '-999': 0
+  grid_row:
+    '-9999': 0
+    '-999': 0
+  spatial_block_id:
+    '-9999': 0
+    '-999': 0
+  split:
+    '-9999': 0
+    '-999': 0
+uncertainty_summary:
+  mean: 33.10859007850381
+  median: 38.24006271362305
+  std: 19.010054250159275
+  p05: 0.3544737741351129
+  p95: 56.49271545410153
+  max: 88.75010681152344
+quality_flags:
+  mod13_summary_qa:
+    1: 471
+    0: 274
+    3: 229
+  mod15_fparlai_qc:
+    32.0: 404
+    97.0: 167
+    105.0: 76
+    48.0: 74
+    40.0: 58
+    0.0: 50
+    72.5: 31
+    36.0: 27
+    8.0: 27
+    44.0: 23
+    101.0: 16
+    16.0: 10
+    24.0: 4
+    4.0: 3
+    64.5: 2
+    12.0: 1
+    68.5: 1

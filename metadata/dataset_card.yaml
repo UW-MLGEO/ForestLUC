@@ -1,11 +1,11 @@
-name: Central Sulawesi AGC Dataset
+dataset_name: Central_Sulawesi_AGC_ML_Dataset_2010
 
 version: 1.0
 
 description: >
   AI-ready dataset for predicting aboveground carbon density
-  in Sulawesi Tengah using MODIS vegetation indices,
-  vegetation structure variables, land cover, and elevation.
+  in Sulawesi Tengah, Indonesia, using remotely sensed vegetation,
+  land cover, and topographic predictors derived from Google Earth Engine datasets.
 
 purpose:
   primary_task: biomass_regression
@@ -16,17 +16,198 @@ geographic_extent:
   province: Sulawesi Tengah
 
 temporal_extent:
-  predictors_year: 2010
-  target_year: 2010
-
-spatial_resolution_m: 500
+  predictor_period:
+    start_date: 2010-01-01
+    end_date: 2010-12-31
+  target_reference_year: 2010
 
 sample_definition: >
-  One sample represents a 500 m pixel containing
-  biomass carbon estimates and coincident predictor variables.
+  One sample represents a 500 m pixel located within Sulawesi Tengah.
+  Each sample contains aboveground carbon density, associated uncertainty,
+  remotely sensed predictor variables, geographic coordinates, spatial
+  indexing variables, and partition assignments for machine-learning workflows.
 
-coordinate_reference_system:
-  EPSG:4326
+variables_included:
+
+  target:
+    - agb_carbon_mg_ha
+
+  target_uncertainty:
+    - agb_uncertainty_mg_ha
+
+  predictors:
+    - ndvi
+    - evi
+    - lai_m2_m2
+    - fpar_fraction
+    - landcover_igbp
+    - elevation_m
+
+  coordinates:
+    - longitude
+    - latitude
+
+  spatial_index:
+    - grid_row
+    - grid_col
+
+  partitioning:
+    - spatial_block_id
+    - split
+
+homogenization:
+
+  coordinate_reference_system:
+
+    name: WGS84
+    epsg: 4326
+
+    coordinate_units:
+      longitude: degrees_east
+      latitude: degrees_north
+
+  temporal_harmonization:
+
+    predictor_period:
+      start_date: 2010-01-01
+      end_date: 2010-12-31
+
+    aggregation_method:
+      vegetation_indices: median
+      lai_fpar: median
+      landcover: mode
+
+    target_reference_year: 2010
+
+    rationale: >
+      Predictor variables were aggregated over the same annual period
+      represented by the biomass target to reduce temporal mismatch
+      between predictors and labels.
+
+  native_resolution:
+
+    MOD13Q1:
+      variables:
+        - ndvi
+        - evi
+      resolution_m: 250
+
+    MOD15A2H:
+      variables:
+        - lai_m2_m2
+        - fpar_fraction
+      resolution_m: 500
+
+    MCD12Q1:
+      variables:
+        - landcover_igbp
+      resolution_m: 500
+
+    GTOPO30:
+      variables:
+        - elevation_m
+      resolution_m: 1000
+
+    NASA_ORNL_Biomass:
+      variables:
+        - agb_carbon_mg_ha
+        - agb_uncertainty_mg_ha
+      resolution_m: 300
+
+  analysis_resolution_m: 500
+
+  unit_harmonization:
+
+    ndvi:
+      original_storage: scaled_integer
+      applied_scale_factor: 0.0001
+      final_units: unitless
+
+    evi:
+      original_storage: scaled_integer
+      applied_scale_factor: 0.0001
+      final_units: unitless
+
+    lai_m2_m2:
+      original_storage: scaled_integer
+      applied_scale_factor: 0.1
+      final_units: m2 m-2
+
+    fpar_fraction:
+      original_storage: scaled_integer
+      applied_scale_factor: 0.01
+      final_units: fraction
+
+    agb_carbon_mg_ha:
+      original_units: Mg C ha-1
+      final_units: Mg C ha-1
+
+    agb_uncertainty_mg_ha:
+      original_units: Mg C ha-1
+      final_units: Mg C ha-1
+
+    elevation_m:
+      original_units: m
+      final_units: m
+
+  source_product_harmonization:
+
+    MOD13Q1:
+      variables:
+        - ndvi
+        - evi
+      correction:
+        - scale_factor_applied
+
+    MOD15A2H:
+      variables:
+        - lai_m2_m2
+        - fpar_fraction
+      correction:
+        - scale_factor_applied
+
+    MCD12Q1:
+      variables:
+        - landcover_igbp
+      correction:
+        - none
+
+    NASA_ORNL_Biomass:
+      variables:
+        - agb_carbon_mg_ha
+        - agb_uncertainty_mg_ha
+      correction:
+        - none
+
+    GTOPO30:
+      variables:
+        - elevation_m
+      correction:
+        - none
+
+  spatial_sampling:
+
+    sampling_method:
+      type: random_pixel_sampling
+
+      target_sample_size: 100000
+
+      sampling_function: Earth Engine sample()
+
+      geometries: false
+
+      drop_nulls: true
+
+    rationale: >
+      A fixed random sample of 100,000 valid pixels is used to create
+      a computationally efficient machine-learning dataset while preserving
+      environmental variability across Central Sulawesi.
 
 license:
   mixed-source
+
+known_limitations:
+  - Biomass and predictor products originate from different remote-sensing products and processing workflows.
+  - No additional cross-sensor bias correction was applied beyond documented scale factors.
+  - Residual differences in native spatial resolution may remain despite harmonization to a common 500 m analysis framework.
+  - The dataset represents a random sample of valid pixels rather than a complete census of all pixels within Central Sulawesi.
